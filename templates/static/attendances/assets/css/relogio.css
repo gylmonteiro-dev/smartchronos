@@ -1,0 +1,22 @@
+.clock-container {
+    text-align: center;
+    background: #000099;
+    padding: 20px 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 300px;
+}
+
+
+#clock {
+    font-size: 2.5em;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #EEDDEE
+}
+
+#date {
+    font-size: 1.2em;
+    color: #EEDDEE
+}
+
