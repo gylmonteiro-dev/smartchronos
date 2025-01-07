@@ -1,11 +1,12 @@
 <div class="mt-4 container d-flex justify-content-center align-items-center">
         <div class="card p-4 shadow-lg" style="width: 350px;">
             <h2 class="text-center mb-4">Registre o ponto</h2>
-            <form method="POST">
+            <form action="{% url "confirmation" %}" method="POST">
+                {% csrf_token %}
                 <!-- Campo Usuário -->
                 <div class="mb-3">
                     <label for="username" class="form-label">Matrícula</label>
-                    <input type="text" class="form-control" id="username" name="username" placeholder="Digite sua matricula" required>
+                    <input type="text" class="form-control" id="username" name="register" placeholder="Digite sua matricula" required>
                 </div>
 
                 <!-- Campo Senha -->
