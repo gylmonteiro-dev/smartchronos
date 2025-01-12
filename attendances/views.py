@@ -24,6 +24,8 @@ def confirmation(request):
         # Retornar o tipo do ultimo ponto
         end_register = WorkPointRecord.objects.filter(user__registration=register).order_by("-created_at").first()
         end_type = end_register.type_point
+        
+        # Caso queira retornar o ultimo registro
         date_time = end_register.created_at
 
     return render(request, "confirmation.html", {'user': user, 'end_type': end_type})
