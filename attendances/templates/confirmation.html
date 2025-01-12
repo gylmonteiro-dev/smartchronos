@@ -4,7 +4,31 @@
 {% block container %}
     {% include "partials/nav.html" %}
 
-    <h1>Teste</h1>
+
+    <div class="container mt-5 d-flex justify-content-center align-items-center">
+        <div class="card shadow-lg p-4" style="width: 400px;">
+            <h4 class="text-center mb-4">Confirmação de Registro</h4>
+            <!-- Detalhes do registro -->
+            <div class="mb-3">
+                <p><strong>Nome do Usuário:</strong> {{user.first_name}}</p>
+                <p><strong>Matrícula:</strong> {{ user.registration }}</p>
+                <p><strong>Data e Hora:</strong> {% now "DATETIME_FORMAT" %}</p>
+                <p><strong>Registro de:</strong> {% if end_type == "O"%}Entrada{% else %}Saída{% endif %}</p>
+            </div>
+            <!-- Botões -->
+            <form method="POST" action="{% url "register" %}">
+                {% csrf_token %}
+                <div class="d-flex justify-content-between">
+                    <input type="hidden" value="{{user.registration}}" name="registration"/>
+                    <button type="button" class="btn btn-secondary" onclick="window.location.href='{% url 'home' %}'">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Confirmar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    
 
 {% endblock container %}
 
