@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib import messages
 from accounts.models import CustomUser
 from .models import WorkPointRecord
 
@@ -16,12 +17,13 @@ def confirmation(request):
             user = CustomUser.objects.get(registration=register)
             
         except CustomUser.DoesNotExist:
-
+            messages.error(request, 'Usuário não identificado')
             # Inserir mensagem a ser exibido
             return redirect("home")
         
         if not user.check_password(password):
             # Inserir mensagem a ser renderizado
+            messages.error(request, 'Senha inválida')
             return redirect("home")
         
         # Retornar o tipo do ultimo ponto
@@ -48,11 +50,12 @@ def register(request):
         user__registration=number_registration
     ).order_by("-created_at").first()
 
-
     # Criar o registro de ponto baseado no ultimo tipo de registro realizado
     if(end_register == None or end_register.type_point == "O"):
         WorkPointRecord.objects.create(user=user, type_point='I')
+        messages.success(request, 'Entrada registrada com sucesso')
     else:
         WorkPointRecord.objects.create(user=user, type_point="O")
+        messages.success(request, "Saída registrada com sucesso")
 
     return render(request, "home.html")

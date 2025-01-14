@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib import messages
 from .models import CustomUser
 
 # Create your views here.
@@ -15,6 +16,7 @@ def create_user(request):
         user.set_password(password)
         user.save()
         
-        return render(request, 'user.html')
+        messages.success(request, f'Usuário {first_name}, cadastrado com sucesso')
+        return redirect("home")
     
     return render(request, 'user.html')
