@@ -2,7 +2,7 @@
 
 
 {% block container %}
-    {% include "partials/nav.html" %}
+
 
 
     <div class="container mt-5 d-flex justify-content-center align-items-center">
@@ -13,7 +13,9 @@
                 <p><strong>Nome do Usuário:</strong> {{user.first_name}}</p>
                 <p><strong>Matrícula:</strong> {{ user.registration }}</p>
                 <p><strong>Data e Hora:</strong> {% now "DATETIME_FORMAT" %}</p>
-                <p><strong>Registro de:</strong> {% if end_type == "O"%}Entrada{% else %}Saída{% endif %}</p>
+                <p><strong>Registro de:</strong> {% if end_type == "I"%}Saída{% else %}Entrada{% endif %}
+                
+                </p>
             </div>
             <!-- Botões -->
             <form method="POST" action="{% url "register" %}">

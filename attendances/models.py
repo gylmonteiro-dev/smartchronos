@@ -1,6 +1,6 @@
 from django.db import models
 from django.conf import settings
-from accounts.models import CustomUser
+from django.utils import timezone
 # Create your models here.
 class WorkPointRecord(models.Model):
 
@@ -11,7 +11,7 @@ class WorkPointRecord(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="point_records")
     created_at = models.DateTimeField(auto_now_add=True)
     update_at = models.DateTimeField(auto_now=True)
-    type_point = models.CharField(max_length=1, choices=TYPE_REGISTER)
+    type_point = models.CharField(max_length=1, choices=TYPE_REGISTER, default='I')
     valid = models.BooleanField(default=False)
 
 

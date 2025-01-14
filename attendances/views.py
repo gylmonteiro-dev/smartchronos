@@ -10,10 +10,13 @@ def confirmation(request):
     if request.method == "POST":
         register = request.POST.get("register")
         password = request.POST.get('password')
+        
         try:
             # Pegar o usuário
             user = CustomUser.objects.get(registration=register)
+            
         except CustomUser.DoesNotExist:
+
             # Inserir mensagem a ser exibido
             return redirect("home")
         
@@ -23,10 +26,14 @@ def confirmation(request):
         
         # Retornar o tipo do ultimo ponto
         end_register = WorkPointRecord.objects.filter(user__registration=register).order_by("-created_at").first()
-        end_type = end_register.type_point
-        
+        if end_register:
+            end_type = end_register.type_point
         # Caso queira retornar o ultimo registro
-        date_time = end_register.created_at
+            date_time = end_register.created_at
+        else:
+            end_type = 'Sem registro'
+        
+        
 
     return render(request, "confirmation.html", {'user': user, 'end_type': end_type})
 
@@ -43,7 +50,7 @@ def register(request):
 
 
     # Criar o registro de ponto baseado no ultimo tipo de registro realizado
-    if(end_register.type_point == None or end_register.type_point == "O"):
+    if(end_register == None or end_register.type_point == "O"):
         WorkPointRecord.objects.create(user=user, type_point='I')
     else:
         WorkPointRecord.objects.create(user=user, type_point="O")
