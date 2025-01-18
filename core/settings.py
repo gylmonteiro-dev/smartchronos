@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     # Apps to aplication
     'accounts',
     'attendances',
+    'point_control',
 ]
 
 MIDDLEWARE = [

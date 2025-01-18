@@ -14,6 +14,7 @@ class WorkPointRecord(models.Model):
     type_point = models.CharField(max_length=1, choices=TYPE_REGISTER, default='I')
     valid = models.BooleanField(default=False)
 
-
+    
     def __str__(self):
         return f"{self.user.username} : {self.created_at.date()} | {self.created_at.hour}:{self.created_at.minute}"
+

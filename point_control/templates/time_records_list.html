@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block container %}
+
+    
+ <div class="container mt-5">
+        <h1 class="text-center mb-4">Registros de Pontos</h1>
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>Código</th>
+                    <th>Data</th>
+                    <th>Hora</th>
+                    <th>Tipo</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                {% for record in last_records %}
+                
+                <!-- Exemplo de registro de ponto -->
+                <tr>
+                    <td>{{record.id}}</td>
+                    <td>{{record.created_at.date}}</td>
+                    <td>{{record.created_at.time}}</td>
+                    <td>{% if record.type_point == 'I'  %}Entrada{% else %}Saída{% endif %}</td>
+                    <td>
+                        <a href="/validar/1" class="btn btn-success btn-sm">Validar</a>
+                    </td>
+                </tr>
+        
+                {% endfor %}
+                <!-- Adicionar mais registros conforme necessário -->
+            </tbody>
+        </table>
+</div>
+    {% endblock container %}
+
+
+    

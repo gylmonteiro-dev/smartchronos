@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block container %}
+
+
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Lista de Funcionários</h1>
+        <ul class="list-group">
+
+            {% for employee in list_employees %}
+            <!-- Template para um funcionário -->
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                    <strong>Matrícula:</strong> {{employee.registration}}<br>
+                    <strong>Nome:</strong> {{employee.first_name}} {{employee.last_name}}
+                </div>
+                <div>
+                    <a href="{% url "list-time-records" employee.id %}" class="btn btn-outline-secondary btn-sm">
+                        <i class="bi bi-watch"></i>
+                    </a>
+                </div>
+            </li>
+            
+            <!-- Adicionar mais itens conforme necessário -->
+            
+            {% endfor %}
+        </ul>
+</div>
+
+{% endblock container %}
