@@ -58,4 +58,4 @@ def register(request):
         WorkPointRecord.objects.create(user=user, type_point="O")
         messages.success(request, "Saída registrada com sucesso")
 
-    return render(request, "home.html")
+    return redirect("home")
