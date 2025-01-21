@@ -15,16 +15,18 @@ def confirmation(request):
         try:
             # Pegar o usuário
             user = CustomUser.objects.get(registration=register)
+
+            # Verifica a senha se esta errada
+            if not user.check_password(password):
+                # Inserir mensagem a ser renderizado
+                messages.error(request, 'Senha inválida')
+                return redirect("home")
             
         except CustomUser.DoesNotExist:
             messages.error(request, 'Usuário não identificado')
             # Inserir mensagem a ser exibido
             return redirect("home")
         
-        if not user.check_password(password):
-            # Inserir mensagem a ser renderizado
-            messages.error(request, 'Senha inválida')
-            return redirect("home")
         
         # Retornar o tipo do ultimo ponto
         end_register = WorkPointRecord.objects.filter(user__registration=register).order_by("-created_at").first()
@@ -45,7 +47,7 @@ def register(request):
     # Resgatar o usuário
     user = CustomUser.objects.get(registration=number_registration)
 
-    # Conferir o ultimo tipo de ponto
+    # Conferir o ultimo registro ponto
     end_register = WorkPointRecord.objects.filter(
         user__registration=number_registration
     ).order_by("-created_at").first()
