@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
 from accounts.models import CustomUser
 from attendances.models import WorkPointRecord
 from django.urls import reverse
@@ -19,7 +20,7 @@ def record_point_validation(request, pk):
     point_record = get_object_or_404(WorkPointRecord, pk=pk)
     point_record.valid = True
     point_record.save()
-
+    messages.success(request, 'Registro validado com sucesso!')
     user_pk = point_record.user.id
     return redirect(reverse("list-time-records", args=[user_pk]))
 
@@ -27,4 +28,5 @@ def record_point_delete(request ,pk):
     point_record = get_object_or_404(WorkPointRecord, pk=pk)
     user_pk = point_record.user.id
     point_record.delete()
+    messages.success(request, 'Registro deletado com sucesso!')
     return redirect(reverse("list-time-records", args=[user_pk]))
