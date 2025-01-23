@@ -21,7 +21,6 @@ def record_point_validation(request, pk):
     point_record.save()
 
     user_pk = point_record.user.id
-    print(user_pk)
     return redirect(reverse("list-time-records", args=[user_pk]))
 
 def record_point_delete(request ,pk):
