@@ -10,7 +10,7 @@ class WorkPointRecord(models.Model):
     )
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="point_records")
     created_at = models.DateTimeField(auto_now_add=True)
-    update_at = models.DateTimeField(auto_now=True)
+    update_at = models.DateTimeField(null=True, blank=True)
     type_point = models.CharField(max_length=1, choices=TYPE_REGISTER, default='I')
     valid = models.BooleanField(default=False)
 
