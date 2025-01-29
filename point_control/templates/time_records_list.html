@@ -59,11 +59,11 @@
                             <div class="modal-body">
                                 <div class="mb-3">
                                     <label for="date-{{ record.id }}" class="form-label">Data</label>
-                                    <input type="date" class="form-control" id="date-{{ record.id }}" name="date" value="{{ record.created_at.date }}">
+                                    <input type="date" class="form-control" id="date-{{ record.id }}" name="date" value="{{ record.update_at.date }}" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="time-{{ record.id }}" class="form-label">Hora</label>
-                                    <input type="time" class="form-control" id="time-{{ record.id }}" name="time" value="{{ record.created_at.time }}">
+                                    <input type="time" class="form-control" id="time-{{ record.id }}" name="time" value="{{ record.update_at.time }}" required>
                                 </div>
                             </div>
                             <div class="modal-footer">
