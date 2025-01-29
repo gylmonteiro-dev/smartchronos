@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from accounts.models import CustomUser
@@ -44,9 +44,9 @@ def record_point_update(request, pk):
     if date_str and time_str:
         new_datetime_str = f'{date_str} {time_str}'
         new_datetime = datetime.strptime(new_datetime_str, "%Y-%m-%d %H:%M")
-        print(new_datetime)
+        
 
-        point_record.update_at = new_datetime
+        point_record.update_at = new_datetime - timedelta(hours=3)
         point_record.save()
     
     return redirect(reverse("list-time-records", args=[user_pk]))
