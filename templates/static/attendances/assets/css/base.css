@@ -1,7 +1,3 @@
 .bg-image {
-    background-image: url('{% static "attendances/assets/img/logo_prefeitura.png" %}');
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        min-height: 100vh; /* A altura mínima do container */
+    background-color: red;
 }

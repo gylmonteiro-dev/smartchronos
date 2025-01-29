@@ -3,22 +3,24 @@
 
 
 {% block container %}
-{% if messages %}
 
-    {% for message in messages %}
-            {% if message.tags == 'error' %}
-            <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                    {{message}}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    
-            </div>
-            {% else %}
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    {{message}}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    
-            </div>
-            
+
+        {% if messages %}
+        
+        {% for message in messages %}
+        {% if message.tags == 'error' %}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                {{message}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                
+        </div>
+        {% else %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{message}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                
+        </div>
+        
             {% endif %}
 
     {% endfor %}
@@ -26,9 +28,10 @@
 {% endif %}
 
 
-    {% include "partials/relogio.html" %}
+{% include "partials/relogio.html" %}
 
-    {% include "partials/form.html" %}
+{% include "partials/form.html" %}
+
 
 {% endblock container %}
 
