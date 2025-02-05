@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+
+
+{% block container %}
+
+    <div class="container my-5">
+      <h1 class="text-center mb-4">Dashboard do Gerente</h1>
+
+      <!-- Cards de Destaque -->
+      <div class="row text-center mb-4">
+        <div class="col-md-3">
+          <div class="card bg-primary text-white">
+            <div class="card-body">
+              <h5 class="card-title">Funcionários Ativos</h5>
+              <p class="card-text display-6">120</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card bg-success text-white">
+            <div class="card-body">
+              <h5 class="card-title">Pontos Hoje</h5>
+              <p class="card-text display-6">90</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card bg-warning text-dark">
+            <div class="card-body">
+              <h5 class="card-title">Atrasos Hoje</h5>
+              <p class="card-text display-6">15%</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card bg-danger text-white">
+            <div class="card-body">
+              <h5 class="card-title">Horas Extras no Mês</h5>
+              <p class="card-text display-6">45</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+            <!-- Card para Listagem de Funcionários -->
+      <div class="row mb-4">
+        <div class="col-md-12 text-center">
+          <a href="{% url "employee-list" %}" class="btn btn-outline-primary btn-lg">Listar Todos os Funcionários</a>
+        </div>
+      </div>
+
+      <!-- Filtros de Pesquisa -->
+      <div class="card mb-4">
+        <div class="card-body">
+          <h5 class="card-title">Filtros</h5>
+          <form class="row g-3">
+            <div class="col-md-4">
+              <label for="startDate" class="form-label">Data Inicial</label>
+              <input type="date" class="form-control" id="startDate" />
+            </div>
+            <div class="col-md-4">
+              <label for="endDate" class="form-label">Data Final</label>
+              <input type="date" class="form-control" id="endDate" />
+            </div>
+            <div class="col-md-4">
+              <label for="employee" class="form-label">Funcionário</label>
+              <input type="text" class="form-control" id="employee" placeholder="Nome ou Matrícula" />
+            </div>
+            <div class="col-md-12 text-end">
+              <button type="submit" class="btn btn-primary">Aplicar Filtros</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Tabela de Registros -->
+      <div class="card mb-4">
+        <div class="card-body">
+          <h5 class="card-title">Registros de Pontos</h5>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>Matrícula</th>
+                <th>Data</th>
+                <th>Entrada</th>
+                <th>Saída</th>
+                <th>Total Horas</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>João Silva</td>
+                <td>12345</td>
+                <td>2025-02-05</td>
+                <td>08:00</td>
+                <td>17:00</td>
+                <td>9h</td>
+                <td>Normal</td>
+              </tr>
+              <tr>
+                <td>Maria Oliveira</td>
+                <td>67890</td>
+                <td>2025-02-05</td>
+                <td>09:15</td>
+                <td>18:00</td>
+                <td>8h 45min</td>
+                <td>Atraso</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Gráficos Placeholder -->
+      <div class="row">
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Horas Trabalhadas por Funcionário</h5>
+              <div class="p-5 bg-light text-center">Gráfico Placeholder</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Distribuição de Atrasos e Faltas</h5>
+              <div class="p-5 bg-light text-center">Gráfico Placeholder</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+{% endblock container %}
+
+
+

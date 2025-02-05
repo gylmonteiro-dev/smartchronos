@@ -32,8 +32,7 @@ def record_point_delete(request ,pk):
     messages.success(request, 'Registro deletado com sucesso!')
     return redirect(reverse("list-time-records", args=[user_pk]))
 
-def record_point_update(request, pk):
-    
+def record_point_update(request, pk): 
     point_record = get_object_or_404(WorkPointRecord, pk=pk)
     user_pk = point_record.user.id
     date_str = request.POST.get('date')
@@ -50,3 +49,43 @@ def record_point_update(request, pk):
         point_record.save()
     
     return redirect(reverse("list-time-records", args=[user_pk]))
+
+
+def verify_user_control(request):
+    register = request.POST.get("register")
+    password = request.POST.get("password")
+
+    if request.method == "POST":
+        try:
+            user = CustomUser.objects.get(registration=register)
+            # Pegar o usuário
+
+            # Verifica a senha se esta errada
+            if not user.check_password(password):
+                # Se a senha for a correta,
+                # Inserir mensagem a ser renderizado
+                messages.error(request, "Senha inválida")
+                return redirect("home")
+
+            # Verificar se é gerente
+            if not user.is_manager:
+                messages.error(request, "Perfil sem permissão")
+                return redirect("home")
+            # Tudo dando certo retornará
+            return render(request, "dashboard_control.html")
+
+        except CustomUser.DoesNotExist:
+            messages.error(request, "Usuário não identificado")
+            # Inserir mensagem a ser exibido
+            return redirect("home")
+
+    # Garantir que tenha o usuário para entrar nesta poágina, caso queira acessar pela URL no método GET
+    try:
+        user_registrado = CustomUser.objects.get(registration=register)
+        if user_registrado:
+            return render(request, "dashboard_control.html")
+
+    except CustomUser.DoesNotExist:
+        messages.error(request, "Necessário informar suas credenciais")
+        # Inserir mensagem a ser exibido
+        return redirect("home")

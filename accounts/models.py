@@ -6,6 +6,7 @@ from django.db import models
 class CustomUser(AbstractUser):
     registration = models.CharField(max_length=20)
     phone_number = models.CharField(max_length=11, blank=True, null=True)
+    is_manager = models.BooleanField(default=False, null=True, blank=True)
     
     # problema com a criação do usuário e a senha
     def __str__(self):

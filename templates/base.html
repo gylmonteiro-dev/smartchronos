@@ -61,13 +61,40 @@
             <!-- <a href="{% url 'create-user' %}" class="btn btn-primary"
               >Criar Usuário</a
             > -->
-            <a href="{% url 'create-user' %}" class="btn btn-primary"
-              >Controle</a
-            >
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">
+              Controle
+            </button>
           </div>
         </div>
       </div>
     </nav>
+
+
+        <!-- Modal de Login -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="loginModalLabel">Login de Usuário</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form method="POST" action="{% url "dashboard" %}">
+              {% csrf_token %}
+              <div class="mb-3">
+                <label for="username" class="form-label">Matrícula</label>
+                <input type="text" class="form-control" id="username" name="register" required>
+              </div>
+              <div class="mb-3">
+                <label for="password" class="form-label">Senha</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+              </div>
+              <button type="submit" class="btn btn-primary w-100">Entrar</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <div class="container">{% block container %} {% endblock container %}</div>
 
