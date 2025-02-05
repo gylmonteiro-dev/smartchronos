@@ -18,6 +18,7 @@ def confirmation(request):
 
             # Verifica a senha se esta errada
             if not user.check_password(password):
+                # Se a senha for a correta, 
                 # Inserir mensagem a ser renderizado
                 messages.error(request, 'Senha inválida')
                 return redirect("home")
@@ -37,8 +38,6 @@ def confirmation(request):
         else:
             end_type = 'Sem registro'
         
-        
-
     return render(request, "confirmation.html", {'user': user, 'end_type': end_type})
 
 
