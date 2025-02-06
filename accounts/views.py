@@ -26,6 +26,8 @@ def create_user(request):
     return redirect("home")
 
 def login_user_manager(request, register, password):
+
+    # Acesso ao objeto do usuario
     user = CustomUser.objects.filter(registration=register).first()
 
     if user:

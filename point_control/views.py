@@ -75,6 +75,8 @@ def dashboard_view(request):
     if not request.user.is_authenticated:
         messages.error(request,'Você precisa estar logado')
         return redirect('home')
+    
+    # Renderiza em um get se tiver um user logado, pois já passou nas validações acima
     return render(
         request,
         "dashboard_control.html",
