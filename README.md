@@ -1,5 +1,6 @@
 # SmartChronos
 
+![Dashboard](https://drive.google.com/file/d/1EEEd1k1V5kx1ZKeZXWmtEolFOXCc5lLn/view?usp=drive_link)
 ## Objetivo do Projeto
 
 Sistema de controle e registro de ponto eletrônico.
