@@ -6,7 +6,7 @@ Sistema de controle e registro de ponto eletrônico.
 
 ## Como Executar o Projeto
 
-1. Clone o repositório: `git clone <link_do_repositorio>`
+1. Clone o repositório: `git clone git@github.com:gylmonteiro-dev/smartchronos.git`
 2. Crie um ambiente virtual em Python: `python3 -m venv .venv`
 3. Ative o ambiente virtual:
     * Linux/macOS: `source .venv/bin/activate`
