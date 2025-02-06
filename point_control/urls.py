@@ -9,5 +9,6 @@ urlpatterns = [
     path('employees/<int:pk>/update/', views.record_point_update, name='update-record'),
     
     # Dashboard control
-    path('dashboard/', views.verify_user_control, name='dashboard')
+    path('dashboard/', views.verify_user_control, name='dashboard'),
+    path('records_by_date/', views.filter_record_by_date, name='records-by-date'),
 ]

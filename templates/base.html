@@ -58,12 +58,16 @@
             <span class="text-center text-lg-start me-lg-3"
               >Secretaria de Educação</span
             >
-            <!-- <a href="{% url 'create-user' %}" class="btn btn-primary"
-              >Criar Usuário</a
-            > -->
+            {% if page == 'dashboard' %}
+            <a href="{% url 'home' %}" class="btn btn-secondary"
+              >Home</a
+            >
+            {% else %}
             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">
               Controle
             </button>
+            {% endif %}
+            
           </div>
         </div>
       </div>

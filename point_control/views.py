@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+from django.utils import timezone
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from accounts.models import CustomUser
@@ -71,8 +72,12 @@ def verify_user_control(request):
             if not user.is_manager:
                 messages.error(request, "Perfil sem permissão")
                 return redirect("home")
+            
+            # Pegar os ultimos 5 registros do dia
+            five_last_records = WorkPointRecord.objects.all()[:5]
+
             # Tudo dando certo retornará
-            return render(request, "dashboard_control.html")
+            return render(request, "dashboard_control.html", {'page': 'dashboard', 'last_records': five_last_records})
 
         except CustomUser.DoesNotExist:
             messages.error(request, "Usuário não identificado")
@@ -83,9 +88,23 @@ def verify_user_control(request):
     try:
         user_registrado = CustomUser.objects.get(registration=register)
         if user_registrado:
-            return render(request, "dashboard_control.html")
+            return render(request, "dashboard_control.html", {'page':'dashboard'})
 
     except CustomUser.DoesNotExist:
         messages.error(request, "Necessário informar suas credenciais")
         # Inserir mensagem a ser exibido
         return redirect("home")
+
+
+def filter_record_by_date(request):
+    start_date = request.POST.get('startDate')
+    end_date = request.POST.get('endDate')
+    register = request.POST.get('register')
+
+    user = CustomUser.objects.get(registration=register)
+    records_user = user.point_records.all()
+
+    # records_filtred = records_user.filter(created_at__range=(start_date, end_date))
+    
+    print(start_date, end_date, register)
+    return render(request, 'filter_time_records_list.html')

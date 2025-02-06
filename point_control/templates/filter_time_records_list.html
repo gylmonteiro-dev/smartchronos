@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% block container %}
+
+    
+ <div class="container mt-5">
+        <h1 class="text-center mb-4">Registros dos pontos de {{user.first_name}} {{user.last_name}}</h1>
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>Código</th>
+                    <th>Data</th>
+                    <th>Hora</th>
+                    <th>Tipo</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                            {{message}}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+                {% for record in last_records %}
+                <!-- Exemplo de registro de ponto -->
+                <tr>
+                    <td>{{record.id}}</td>
+                    {% if record.update_at %}
+                        <td>{{record.update_at.date}}</td>
+                        <td>{{record.update_at.time}}</td>
+                   {% else %}
+                        <td>{{record.created_at.date}}</td>
+                        <td>{{record.created_at.time}}</td>
+                    {% endif %}
+                    <td>{% if record.type_point == 'I'  %}Entrada{% else %}Saída{% endif %}</td>
+                    <td class="d-flex justify-content-between align-items-center">{% if not record.valid %}
+                            <a href="{% url "validation" record.id %}" class="btn btn-success btn-sm">Validar</a>
+                        {% else %}
+                        <i class="bi bi-check-circle-fill"></i>
+                        {% endif %}
+                        <i class="bi bi-pen-fill text-primary" data-bs-toggle="modal" data-bs-target="#editModal-{{ record.id }}"></i>
+                        <a href="{% url "delete-point" record.id %}"><i class="bi bi-trash-fill text-danger"></i></a>
+                    </td>
+                </tr>
+                <!-- Modal -->
+            <div class="modal fade" id="editModal-{{ record.id }}" tabindex="-1" aria-labelledby="editModalLabel-{{ record.id }}" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="editModalLabel-{{ record.id }}">Editar Registro {{record.id}}</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form method="post" action="{% url "update-record" record.id %}">
+                            {% csrf_token %}
+                            <div class="modal-body">
+                                <div class="mb-3">
+                                    <label for="date-{{ record.id }}" class="form-label">Data</label>
+                                    <input type="date" class="form-control" id="date-{{ record.id }}" name="date" value="{{ record.update_at.date }}" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="time-{{ record.id }}" class="form-label">Hora</label>
+                                    <input type="time" class="form-control" id="time-{{ record.id }}" name="time" value="{{ record.update_at.time }}" required>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                                <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        
+                {% endfor %}
+                <!-- Adicionar mais registros conforme necessário -->
+            </tbody>
+        </table>
+</div>
+    {% endblock container %}
+
+
+    

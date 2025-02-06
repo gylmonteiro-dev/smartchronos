@@ -54,18 +54,19 @@
       <div class="card mb-4">
         <div class="card-body">
           <h5 class="card-title">Filtros</h5>
-          <form class="row g-3">
+          <form method="POST" action="{% url "records-by-date" %}" class="row g-3">
+            {% csrf_token %}
             <div class="col-md-4">
               <label for="startDate" class="form-label">Data Inicial</label>
-              <input type="date" class="form-control" id="startDate" />
+              <input type="date" class="form-control" id="startDate" name="startDate" />
             </div>
             <div class="col-md-4">
               <label for="endDate" class="form-label">Data Final</label>
-              <input type="date" class="form-control" id="endDate" />
+              <input type="date" class="form-control" id="endDate" name="endDate" />
             </div>
             <div class="col-md-4">
               <label for="employee" class="form-label">Funcionário</label>
-              <input type="text" class="form-control" id="employee" placeholder="Nome ou Matrícula" />
+              <input type="text" class="form-control" id="employee" placeholder="Matrícula" name="register" />
             </div>
             <div class="col-md-12 text-end">
               <button type="submit" class="btn btn-primary">Aplicar Filtros</button>
@@ -77,38 +78,37 @@
       <!-- Tabela de Registros -->
       <div class="card mb-4">
         <div class="card-body">
-          <h5 class="card-title">Registros de Pontos</h5>
+          <h5 class="card-title">Registros mais recentes</h5>
           <table class="table table-striped">
             <thead>
               <tr>
                 <th>Nome</th>
                 <th>Matrícula</th>
                 <th>Data</th>
-                <th>Entrada</th>
-                <th>Saída</th>
-                <th>Total Horas</th>
+                <th>Tipo</th>
                 <th>Status</th>
               </tr>
             </thead>
             <tbody>
+              {% for record in last_records %}
               <tr>
-                <td>João Silva</td>
-                <td>12345</td>
-                <td>2025-02-05</td>
-                <td>08:00</td>
-                <td>17:00</td>
-                <td>9h</td>
-                <td>Normal</td>
+                <td>{{record.user.first_name}}</td>
+                <td>{{record.user.registration}}</td>
+                <td>{{record.created_at}}</td>
+                {% if record.type_point == 'I' %}
+                <td>Entrada</td>
+                {% else %}
+                <td>Saída</td>
+                {% endif %}
+                {% if record.valid %}
+                <td>Validado</td>
+                
+                {% else %}
+                <td>Não validado</td>
+                {% endif %}
               </tr>
-              <tr>
-                <td>Maria Oliveira</td>
-                <td>67890</td>
-                <td>2025-02-05</td>
-                <td>09:15</td>
-                <td>18:00</td>
-                <td>8h 45min</td>
-                <td>Atraso</td>
-              </tr>
+              {% endfor %}
+             
             </tbody>
           </table>
         </div>
