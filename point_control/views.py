@@ -1,8 +1,10 @@
 from datetime import datetime, timedelta
 from django.utils import timezone
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from accounts.models import CustomUser
+from accounts.views import login_user_manager
 from attendances.models import WorkPointRecord
 from django.urls import reverse
 # Create your views here.
@@ -52,48 +54,77 @@ def record_point_update(request, pk):
     return redirect(reverse("list-time-records", args=[user_pk]))
 
 
-def verify_user_control(request):
+def dashboard_view(request):
     register = request.POST.get("register")
     password = request.POST.get("password")
+    five_last_records = WorkPointRecord.objects.all()[:5]
+    
+    if request.method == 'POST':
+        user = login_user_manager(request=request, register=register, password=password)
+        if user:
+            return render(
+                request,
+                "dashboard_control.html",
+                {"page": "dashboard", "last_records": five_last_records},
+            )
+        else:
+            messages.error(request,'Credenciais ou permissão inválida')
+            return redirect('home')
 
-    if request.method == "POST":
-        try:
-            user = CustomUser.objects.get(registration=register)
-            # Pegar o usuário
+    # Condição para um get via endereço
+    if not request.user.is_authenticated:
+        messages.error(request,'Você precisa estar logado')
+        return redirect('home')
+    return render(
+        request,
+        "dashboard_control.html",
+        {"page": "dashboard", "last_records": five_last_records},
+    )
 
-            # Verifica a senha se esta errada
-            if not user.check_password(password):
-                # Se a senha for a correta,
-                # Inserir mensagem a ser renderizado
-                messages.error(request, "Senha inválida")
-                return redirect("home")
+    # return render(
+    #     request,
+    #     "dashboard_control.html",
+    #     {"page": "dashboard", "last_records": five_last_records},
+    #
 
-            # Verificar se é gerente
-            if not user.is_manager:
-                messages.error(request, "Perfil sem permissão")
-                return redirect("home")
-            
-            # Pegar os ultimos 5 registros do dia
-            five_last_records = WorkPointRecord.objects.all()[:5]
+    # if request.method == "POST":
+    #     try:
+    #         user = CustomUser.objects.get(registration=register)
+    #         # Pegar o usuário
 
-            # Tudo dando certo retornará
-            return render(request, "dashboard_control.html", {'page': 'dashboard', 'last_records': five_last_records})
+    #         # Verifica a senha se esta errada
+    #         if not user.check_password(password):
+    #             # Se a senha for a correta,
+    #             # Inserir mensagem a ser renderizado
+    #             messages.error(request, "Senha inválida")
+    #             return redirect("home")
 
-        except CustomUser.DoesNotExist:
-            messages.error(request, "Usuário não identificado")
-            # Inserir mensagem a ser exibido
-            return redirect("home")
+    #         # Verificar se é gerente
+    #         if not user.is_manager:
+    #             messages.error(request, "Perfil sem permissão")
+    #             return redirect("home")
 
-    # Garantir que tenha o usuário para entrar nesta poágina, caso queira acessar pela URL no método GET
-    try:
-        user_registrado = CustomUser.objects.get(registration=register)
-        if user_registrado:
-            return render(request, "dashboard_control.html", {'page':'dashboard'})
+    #         # Pegar os ultimos 5 registros do dia
+    #         five_last_records = WorkPointRecord.objects.all()[:5]
 
-    except CustomUser.DoesNotExist:
-        messages.error(request, "Necessário informar suas credenciais")
-        # Inserir mensagem a ser exibido
-        return redirect("home")
+    #         # Tudo dando certo retornará
+    #         return render(request, "dashboard_control.html", {'page': 'dashboard', 'last_records': five_last_records})
+
+    #     except CustomUser.DoesNotExist:
+    #         messages.error(request, "Usuário não identificado")
+    #         # Inserir mensagem a ser exibido
+    #         return redirect("home")
+
+    # # Garantir que tenha o usuário para entrar nesta poágina, caso queira acessar pela URL no método GET
+    # try:
+    #     user_registrado = CustomUser.objects.get(registration=register)
+    #     if user_registrado:
+    #         return render(request, "dashboard_control.html", {'page':'dashboard'})
+
+    # except CustomUser.DoesNotExist:
+    #     messages.error(request, "Necessário informar suas credenciais")
+    #     # Inserir mensagem a ser exibido
+    #     return redirect("home")
 
 
 def filter_record_by_date(request):
