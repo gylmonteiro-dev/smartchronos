@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 from django.utils import timezone
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login #perderam o uso ao fazer a autenticação e login na view de login_user_manager
 from django.contrib import messages
 from accounts.models import CustomUser
 from accounts.views import login_user_manager
