@@ -57,7 +57,7 @@ def record_point_update(request, pk):
 def dashboard_view(request):
     register = request.POST.get("register")
     password = request.POST.get("password")
-    five_last_records = WorkPointRecord.objects.all()[:5]
+    five_last_records = WorkPointRecord.objects.all().order_by('-created_at')[:5]
     
     if request.method == 'POST':
         user = login_user_manager(request=request, register=register, password=password)
@@ -96,7 +96,7 @@ def dashboard_view(request):
 
     #         # Verifica a senha se esta errada
     #         if not user.check_password(password):
-    #             # Se a senha for a correta,
+    #             # Se a senha for incorreta,
     #             # Inserir mensagem a ser renderizado
     #             messages.error(request, "Senha inválida")
     #             return redirect("home")
